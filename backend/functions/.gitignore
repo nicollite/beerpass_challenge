@@ -1,0 +1,11 @@
+node_modules/
+
+# Build files
+dist/
+
+# Env files
+.env*
+.runtimeconfig.json
+
+# Credentials
+credentials/

@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "lib": ["es6"],
+    "allowJs": true,
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "removeComments": false,
+    "typeRoots": ["./node_modules/@types"],
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@lib": ["src/lib"],
+      "@env": ["src/config/env"],
+      "@firestore": ["src/config/db"],
+      "@storage": ["src/config/bucket"],
+      "@logger": ["src/logger"],
+      "@http-error": ["src/exceptions/http-error"],
+      "@services/*": ["src/core/services/*"],
+      "@pipes/*": ["src/pipes/*"],
+      "@middlewares/*": ["src/middlewares/*"]
+    },
+    "plugins": [
+      {
+        "transform": "typescript-transform-paths",
+        "useRootDirs": true
+      }
+    ]
+  },
+  "include": ["src/**/*"]
+}

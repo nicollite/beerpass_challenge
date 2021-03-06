@@ -1,0 +1,13 @@
+{
+  "service": "logger",
+  "error": {
+    "response": {
+      "statusCode": 404,
+      "message": "Cannot GET /utils/blob/get-and-resize-img?url=https://i.kym-cdn.com/entries/icons/original/000/034/348/ezgif-1-feb8444f9e0e.png&width=150&height=",
+      "error": "Not Found"
+    },
+    "status": 404,
+    "message": "Cannot GET /utils/blob/get-and-resize-img?url=https://i.kym-cdn.com/entries/icons/original/000/034/348/ezgif-1-feb8444f9e0e.png&width=150&height="
+  },
+  "timestamp": "2021-01-20 22:32:12"
+}
