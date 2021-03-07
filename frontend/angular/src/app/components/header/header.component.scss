@@ -1,0 +1,23 @@
+nav {
+  width: 100vw;
+  height: 70px;
+  background-color: #1f1f1f;
+  color: #fff;
+  padding-right: 30px;
+  padding-left: 10px;
+
+  img {
+    width: 50px;
+  }
+
+  button {
+    min-width: 80px;
+    span {
+      margin-right: 10px;
+    }
+  }
+
+  span {
+    font-size: 20px;
+  }
+}

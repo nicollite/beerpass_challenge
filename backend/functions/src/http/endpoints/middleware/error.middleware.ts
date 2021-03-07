@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { HttpError } from "@http-error";
+import { HttpError } from "src/http/endpoints/exceptions/http-error";
 import { logger } from "@logger";
 
 /**

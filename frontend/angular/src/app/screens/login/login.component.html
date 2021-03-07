@@ -1,0 +1,25 @@
+<div class="main">
+  <h1>Login Beerpass</h1>
+
+  <div fxLayout="column" fxLayoutGap="10px">
+    <mat-form-field appearance="outline">
+      <mat-label>Email:</mat-label>
+      <input matInput [formControl]="email" placeholder="Email" (keydown.enter)="login()" />
+      <mat-icon matSuffix>email</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field class="" appearance="outline">
+      <mat-label>Senha</mat-label>
+      <input
+        type="password"
+        [formControl]="password"
+        matInput
+        placeholder="********"
+        (keydown.enter)="login()"
+      />
+      <mat-icon matSuffix>lock</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <button mat-raised-button color="primary" (click)="login()">Login</button>
+</div>

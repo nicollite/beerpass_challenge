@@ -1,0 +1,19 @@
+<div>
+  <mat-card
+    *ngFor="let chopp of choppService.chopps$ | async"
+    fxLayout="row nowrap"
+    fxFlexAlign="start center"
+    fxLayoutGap="30px"
+  >
+    <div class="img-div" fxLayout="column" fxFlexAlign="center center" fxLayoutGap="10px">
+      <img [src]="chopp.img?.url || '/assets/beer.png'" />
+      <span *ngIf="chopp.img.title">{{ chopp.img.title }}</span>
+    </div>
+    <div class="chopp-info" fxLayout="column" fxFlexAlign="center" fxLayoutGap="5px">
+      <span class="chopp-name">{{ chopp.name }}</span>
+      <span class="chopp-desc">{{ chopp.description }}</span>
+      <span>Preço: R${{ chopp.price.toFixed(2) }}</span>
+      <span>Quantidade: {{ chopp.qty }}</span>
+    </div>
+  </mat-card>
+</div>

@@ -1,9 +1,57 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if
-          request.time < timestamp.date(2021, 4, 5);
+  // match /{document=**} {
+    //   allow read, write: if
+    //   request.time < timestamp.date(2021, 4, 5);
+    // }
+    match /users/{userId} {
+      // Check if the user is getting it's own document or if the user is an admin
+      allow get: if isSingnedIn() && isOwner() 
     }
+
+    match /chopps/{choppId} {
+      // Check if the user is getting it's own document or if the user is an admin
+      allow read: if isSingnedIn() && userExists(request.auth.uid)
+    }
+
+    function userExists(userId){
+      return exists(/databases/$(database)/documents/users/$(userId))
+    }
+
+    // Helper functions
+
+
+    // Checks if the requets user is the owner of the document
+    function isOwner(){
+      return request.auth.uid == resource.data.uid || 
+      request.auth.token.email == resource.data.email;
+    }
+
+    // Gets the requester user data
+    function getUserData(){
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data
+    }
+
+    // Checks if the request has auth
+    function isSingnedIn(){
+      return request.auth != null;
+    }
+
+    // Checks if the email is verified
+    function emailVerified(){
+      return request.auth.token.email_verified;
+    }
+
+    // Get the data from the requested doc
+    function existingData(){
+      return resource.data;
+    }
+
+    // Get the data that the doc will look like after write. write only function
+    function incomingData(){
+      return request.resource.data;
+    }
+
   }
 }

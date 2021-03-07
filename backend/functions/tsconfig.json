@@ -22,8 +22,8 @@
       "@firestore": ["src/config/db"],
       "@storage": ["src/config/bucket"],
       "@logger": ["src/logger"],
-      "@http-error": ["src/exceptions/http-error"],
-      "@services/*": ["src/core/services/*"],
+      "@http-error": ["src/http/endpoints/exceptions/http-error"],
+      "@services/*": ["src/http/endpoints/services/*"],
       "@pipes/*": ["src/pipes/*"],
       "@middlewares/*": ["src/middlewares/*"]
     },

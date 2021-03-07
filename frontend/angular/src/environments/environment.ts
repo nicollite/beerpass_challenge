@@ -3,7 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebaseConfig: {
+    apiKey: "AIzaSyDEcrSIu_zTXu8kF6wKGCLYv7qhYHcnWCY",
+    authDomain: "beerpass-challenge.firebaseapp.com",
+    projectId: "beerpass-challenge",
+    storageBucket: "beerpass-challenge.appspot.com",
+    messagingSenderId: "440433916786",
+    appId: "1:440433916786:web:bd731ca32c8319ec60fbeb",
+  },
 };
 
 /*
