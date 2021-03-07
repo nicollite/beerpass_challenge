@@ -3,13 +3,13 @@ import { HttpError } from "@http-error";
 import { autoId } from "@nicollite/utils";
 import { Chopp } from "shared";
 
-export const choppCollection = db.collection("choops");
+export const choppCollection = db.collection("chopps");
 
 /**
  * Add a the chop doc, if don't exists create a new doc
  * @param chopps A Chopp object or array
  */
-export async function addUpdateChoppInDb(chopps: Chopp | Chopp[]): Promise<void> {
+export async function addUpdateChoppInDb(chopps: Chopp | Chopp[]): Promise<Chopp | Chopp[]> {
   const addChopp = async (chopp: Chopp) => {
     chopp.id = chopp.id ? chopp.id : autoId();
     await choppCollection.doc(chopp.id).set(chopp, { merge: true });
@@ -21,6 +21,7 @@ export async function addUpdateChoppInDb(chopps: Chopp | Chopp[]): Promise<void>
   } else {
     await addChopp(chopps);
   }
+  return chopps;
 }
 
 /**
@@ -48,5 +49,5 @@ export async function getChoppsInDb(id?: string) {
  * @param id The chopp id
  */
 export async function deleteChoppInDb(id: string): Promise<void> {
-  return choppCollection.doc(id).delete().then();
+  await choppCollection.doc(id).delete();
 }
