@@ -23,7 +23,7 @@ export async function authentication(
   const [scheme, token] = authHeader.split(" ");
 
   if (!token) return next(new HttpError(400, "Invalid authorization schema"));
-  if (token === env.test.token) return next();
+  if (env.app.node_env === "dev" && token === env.test.token) return next();
 
   if (scheme === "JWT") {
     try {

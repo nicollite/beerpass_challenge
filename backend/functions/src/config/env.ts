@@ -15,4 +15,7 @@ export interface Env {
 
 /** Environment object */
 export let env: Env = Object.assign({}, config()) as any;
-env.app.firebase_config = JSON.parse(env.app.firebase_config);
+env.app.firebase_config =
+  typeof env.app.firebase_config === "string"
+    ? JSON.parse(env.app.firebase_config)
+    : env.app.firebase_config;
