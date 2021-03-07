@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { User } from "shared";
-import { filter, take, map } from "rxjs/operators";
+import { filter, take, map, takeUntil } from "rxjs/operators";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore } from "@angular/fire/firestore";
 import firebase from "firebase/app";
@@ -41,6 +41,9 @@ export class AuthService {
   /** Observable that emits the user data */
   user$: Observable<User>;
 
+  /** Observable that emits the user data */
+  sign$: Observable<boolean>;
+
   /** The logged user data */
   private user: User;
 
@@ -52,6 +55,8 @@ export class AuthService {
 
   /** Time in milliseconds for expiration of this JWT */
   private jwtExpiration: number = 3550 * 1000;
+
+  private unsubscribe$ = new Subject();
 
   /** The logged user uid, if no logged user an empty string "" */
   get uid(): string {
@@ -66,13 +71,16 @@ export class AuthService {
   }
 
   constructor(_auth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
+    document["a"] = afs.firestore;
     this.auth = _auth as AngularFireAuth & firebase.auth.Auth;
 
     this.auth.authState.subscribe(user => this.persitentLogin(user));
 
+    this.sign$ = this.auth.authState.pipe(map(user => !!user));
+
     this.user$ = this.userSub
       // Filter value to emit user only
-      .pipe(filter(user => (user ? true : false)));
+      .pipe(filter(user => !!user)); //Map boolean
 
     this.jwt = {
       token: "",
@@ -122,6 +130,7 @@ export class AuthService {
   signOut() {
     // Logout services
     this.auth.signOut();
+    this.unsubscribe$.next();
 
     // Unset properties
     this.authUser = undefined;
@@ -161,6 +170,7 @@ export class AuthService {
     this.userCollection
       .doc<User>(this.uid)
       .valueChanges()
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(user => {
         this.user = user;
         // Emit user data
