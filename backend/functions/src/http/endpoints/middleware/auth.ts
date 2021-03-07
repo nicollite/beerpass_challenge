@@ -1,5 +1,6 @@
 import { env } from "@env";
 import { HttpError } from "@http-error";
+import { is } from "@nicollite/utils";
 import { Request, Response, NextFunction } from "express";
 import { auth } from "firebase-admin";
 import { logger } from "firebase-functions";
@@ -16,9 +17,12 @@ export async function authentication(
   res: Response,
   next: NextFunction,
 ): Promise<void> {
-  if (!req.headers["authorization"]) next(new HttpError(403, "Forbidden Request"));
-  const [scheme, token] = req.headers["authorization"].split(" ");
+  const authHeader = req.headers["authorization"] as string;
+  if (!authHeader || !is(authHeader, "string"))
+    next(new HttpError(400, "Invalid or missing authorization header"));
+  const [scheme, token] = authHeader.split(" ");
 
+  if (!token) return next(new HttpError(400, "Invalid authorization schema"));
   if (token === env.test.token) return next();
 
   if (scheme === "JWT") {
@@ -39,5 +43,5 @@ export async function authentication(
     }
   }
 
-  next(new HttpError(401, "Invalid authenticatil schema"));
+  next(new HttpError(401, "Invalid authorization schema"));
 }
