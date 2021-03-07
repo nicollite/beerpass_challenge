@@ -23,12 +23,12 @@ choppRouter.delete("", removeChopps);
  * @response void
  */
 async function creteOrUpdateChopp(req: Request, res: Response, next: NextFunction) {
-  const chopps: Chopp | Chopp[] = req.body;
+  let chopps: Chopp | Chopp[] = req.body;
 
   try {
-    await addUpdateChoppInDb(chopps);
+    chopps = await addUpdateChoppInDb(chopps);
     logger.info("chopps added", { chopps });
-    return res.end(chopps);
+    return res.send(chopps);
   } catch (err) {
     next(err);
   }
@@ -67,8 +67,8 @@ async function removeChopps(req: Request, res: Response, next: NextFunction) {
   if (!id) next(new HttpError(400, "No chopp id in query string"));
 
   try {
-    const chopps = await deleteChoppInDb(id as string);
-    return res.send(chopps);
+    await deleteChoppInDb(id as string);
+    return res.send();
   } catch (err) {
     next(err);
   }

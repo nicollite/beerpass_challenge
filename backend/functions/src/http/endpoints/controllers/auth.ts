@@ -28,7 +28,7 @@ export async function getJWT(req: Request, res: Response, next: NextFunction) {
     });
     return res.send({ jwt });
   } catch (err) {
-    if (err.cond) next(new HttpError(400, err.message, { info: err }));
+    if (err.code) next(new HttpError(401, "Invalid Login", { info: err }));
     next(err);
   }
 }
