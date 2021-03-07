@@ -4,8 +4,8 @@ import { install } from "source-map-support";
 import { env } from "@env";
 
 // Use source map support
-install();
+if (env.app.node_env === "prod") install();
 
 // Initialize app in firebase-admin and firebase
 admin.initializeApp();
-firebase.initializeApp(env.firebase_config);
+firebase.initializeApp(env.app.firebase_config);

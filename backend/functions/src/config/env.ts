@@ -11,9 +11,8 @@ export interface Env {
   test: {
     token: string;
   };
-  firebase_config: { databaseURL: string; storageBucket: string; projectId: string };
 }
 
 /** Environment object */
 export let env: Env = Object.assign({}, config()) as any;
-env = { ...env, firebase_config: JSON.parse(process.env.FIREBASE_CONFIG) };
+env.app.firebase_config = JSON.parse(env.app.firebase_config);
