@@ -16,13 +16,14 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(routeLogger);
-app.use(authentication);
-app.use(errorMiddleware);
 
 // Set the routes
 app.use(getRoutes());
 
-// Set express app for dev
+// Set error middlaware
+app.use(errorMiddleware);
+
+// Set express app for
 if (env.app.node_env === "dev") {
   const host = "localhost";
   const port = 5000;
